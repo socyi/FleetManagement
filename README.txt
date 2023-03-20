@@ -23,6 +23,8 @@ NuGet Packages:
 
 DB:
 - SQL Server
+
+schema file: FleetManagement.bacpac
 --------------------------------------------------------
 Steps:
 
@@ -30,7 +32,7 @@ Steps:
 - Connected Visual Studio with local SQL Server
 - Generated DBContext, edmx diagram, Models using EF
 - Generated Scaffolded Controlers for Fleet, Vessel, Container models
-- 
+- Added code to satisfy the requirements
 -----------------------------------------------------------
 Possible improvements:
 
