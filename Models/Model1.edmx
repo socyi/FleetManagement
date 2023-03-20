@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="FleetManagementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Containers">
+          <Key>
+            <PropertyRef Name="ContainerID" />
+          </Key>
+          <Property Name="ContainerID" Type="int" Nullable="false" />
+          <Property Name="ContainerName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="VesselID" Type="int" />
+        </EntityType>
+        <EntityType Name="Fleets">
+          <Key>
+            <PropertyRef Name="FleetID" />
+          </Key>
+          <Property Name="FleetID" Type="int" Nullable="false" />
+          <Property Name="FleetName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Vessels">
+          <Key>
+            <PropertyRef Name="VesselID" />
+          </Key>
+          <Property Name="VesselID" Type="int" Nullable="false" />
+          <Property Name="VesselName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MaxLoad" Type="int" Nullable="false" />
+          <Property Name="FleetID" Type="int" />
+        </EntityType>
+        <Association Name="FK_Containers_Vessels">
+          <End Role="Vessels" Type="Self.Vessels" Multiplicity="0..1" />
+          <End Role="Containers" Type="Self.Containers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vessels">
+              <PropertyRef Name="VesselID" />
+            </Principal>
+            <Dependent Role="Containers">
+              <PropertyRef Name="VesselID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vessels_Fleets">
+          <End Role="Fleets" Type="Self.Fleets" Multiplicity="0..1" />
+          <End Role="Vessels" Type="Self.Vessels" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fleets">
+              <PropertyRef Name="FleetID" />
+            </Principal>
+            <Dependent Role="Vessels">
+              <PropertyRef Name="FleetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FleetManagementModelStoreContainer">
+          <EntitySet Name="Containers" EntityType="Self.Containers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Fleets" EntityType="Self.Fleets" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vessels" EntityType="Self.Vessels" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Containers_Vessels" Association="Self.FK_Containers_Vessels">
+            <End Role="Vessels" EntitySet="Vessels" />
+            <End Role="Containers" EntitySet="Containers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vessels_Fleets" Association="Self.FK_Vessels_Fleets">
+            <End Role="Fleets" EntitySet="Fleets" />
+            <End Role="Vessels" EntitySet="Vessels" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FleetManagementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Container">
+          <Key>
+            <PropertyRef Name="ContainerID" />
+          </Key>
+          <Property Name="ContainerID" Type="Int32" Nullable="false" />
+          <Property Name="ContainerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="VesselID" Type="Int32" />
+          <NavigationProperty Name="Vessel" Relationship="Self.FK_Containers_Vessels" FromRole="Containers" ToRole="Vessels" />
+        </EntityType>
+        <EntityType Name="Fleet">
+          <Key>
+            <PropertyRef Name="FleetID" />
+          </Key>
+          <Property Name="FleetID" Type="Int32" Nullable="false" />
+          <Property Name="FleetName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Vessels" Relationship="Self.FK_Vessels_Fleets" FromRole="Fleets" ToRole="Vessels" />
+        </EntityType>
+        <EntityType Name="Vessel">
+          <Key>
+            <PropertyRef Name="VesselID" />
+          </Key>
+          <Property Name="VesselID" Type="Int32" Nullable="false" />
+          <Property Name="VesselName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MaxLoad" Type="Int32" Nullable="false" />
+          <Property Name="FleetID" Type="Int32" />
+          <NavigationProperty Name="Containers" Relationship="Self.FK_Containers_Vessels" FromRole="Vessels" ToRole="Containers" />
+          <NavigationProperty Name="Fleet" Relationship="Self.FK_Vessels_Fleets" FromRole="Vessels" ToRole="Fleets" />
+        </EntityType>
+        <Association Name="FK_Containers_Vessels">
+          <End Role="Vessels" Type="Self.Vessel" Multiplicity="0..1" />
+          <End Role="Containers" Type="Self.Container" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vessels">
+              <PropertyRef Name="VesselID" />
+            </Principal>
+            <Dependent Role="Containers">
+              <PropertyRef Name="VesselID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vessels_Fleets">
+          <End Role="Fleets" Type="Self.Fleet" Multiplicity="0..1" />
+          <End Role="Vessels" Type="Self.Vessel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fleets">
+              <PropertyRef Name="FleetID" />
+            </Principal>
+            <Dependent Role="Vessels">
+              <PropertyRef Name="FleetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FleetManagementEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Containers" EntityType="Self.Container" />
+          <EntitySet Name="Fleets" EntityType="Self.Fleet" />
+          <EntitySet Name="Vessels" EntityType="Self.Vessel" />
+          <AssociationSet Name="FK_Containers_Vessels" Association="Self.FK_Containers_Vessels">
+            <End Role="Vessels" EntitySet="Vessels" />
+            <End Role="Containers" EntitySet="Containers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vessels_Fleets" Association="Self.FK_Vessels_Fleets">
+            <End Role="Fleets" EntitySet="Fleets" />
+            <End Role="Vessels" EntitySet="Vessels" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FleetManagementModelStoreContainer" CdmEntityContainer="FleetManagementEntities">
+          <EntitySetMapping Name="Containers">
+            <EntityTypeMapping TypeName="FleetManagementModel.Container">
+              <MappingFragment StoreEntitySet="Containers">
+                <ScalarProperty Name="ContainerID" ColumnName="ContainerID" />
+                <ScalarProperty Name="ContainerName" ColumnName="ContainerName" />
+                <ScalarProperty Name="VesselID" ColumnName="VesselID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Fleets">
+            <EntityTypeMapping TypeName="FleetManagementModel.Fleet">
+              <MappingFragment StoreEntitySet="Fleets">
+                <ScalarProperty Name="FleetID" ColumnName="FleetID" />
+                <ScalarProperty Name="FleetName" ColumnName="FleetName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vessels">
+            <EntityTypeMapping TypeName="FleetManagementModel.Vessel">
+              <MappingFragment StoreEntitySet="Vessels">
+                <ScalarProperty Name="VesselID" ColumnName="VesselID" />
+                <ScalarProperty Name="VesselName" ColumnName="VesselName" />
+                <ScalarProperty Name="MaxLoad" ColumnName="MaxLoad" />
+                <ScalarProperty Name="FleetID" ColumnName="FleetID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

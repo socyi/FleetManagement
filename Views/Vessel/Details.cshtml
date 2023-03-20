@@ -1,0 +1,42 @@
+﻿@model FleetManagement.Models.Vessel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Vessel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.VesselName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VesselName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MaxLoad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MaxLoad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fleet.FleetName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fleet.FleetName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.VesselID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

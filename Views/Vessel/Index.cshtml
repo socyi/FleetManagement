@@ -1,0 +1,47 @@
+﻿@model IEnumerable<FleetManagement.Models.Vessel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Vessels</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.VesselID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VesselName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MaxLoad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Fleet.FleetName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.VesselID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VesselName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MaxLoad)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Fleet.FleetName)
+        </td>
+      
+    </tr>
+}
+
+</table>

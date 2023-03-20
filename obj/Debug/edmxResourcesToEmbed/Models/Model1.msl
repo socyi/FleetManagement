@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="FleetManagementModelStoreContainer" CdmEntityContainer="FleetManagementEntities">
+    <EntitySetMapping Name="Containers">
+      <EntityTypeMapping TypeName="FleetManagementModel.Container">
+        <MappingFragment StoreEntitySet="Containers">
+          <ScalarProperty Name="ContainerID" ColumnName="ContainerID" />
+          <ScalarProperty Name="ContainerName" ColumnName="ContainerName" />
+          <ScalarProperty Name="VesselID" ColumnName="VesselID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Fleets">
+      <EntityTypeMapping TypeName="FleetManagementModel.Fleet">
+        <MappingFragment StoreEntitySet="Fleets">
+          <ScalarProperty Name="FleetID" ColumnName="FleetID" />
+          <ScalarProperty Name="FleetName" ColumnName="FleetName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Vessels">
+      <EntityTypeMapping TypeName="FleetManagementModel.Vessel">
+        <MappingFragment StoreEntitySet="Vessels">
+          <ScalarProperty Name="VesselID" ColumnName="VesselID" />
+          <ScalarProperty Name="VesselName" ColumnName="VesselName" />
+          <ScalarProperty Name="MaxLoad" ColumnName="MaxLoad" />
+          <ScalarProperty Name="FleetID" ColumnName="FleetID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

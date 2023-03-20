@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FleetManagementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Containers">
+    <Key>
+      <PropertyRef Name="ContainerID" />
+    </Key>
+    <Property Name="ContainerID" Type="int" Nullable="false" />
+    <Property Name="ContainerName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="VesselID" Type="int" />
+  </EntityType>
+  <EntityType Name="Fleets">
+    <Key>
+      <PropertyRef Name="FleetID" />
+    </Key>
+    <Property Name="FleetID" Type="int" Nullable="false" />
+    <Property Name="FleetName" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Vessels">
+    <Key>
+      <PropertyRef Name="VesselID" />
+    </Key>
+    <Property Name="VesselID" Type="int" Nullable="false" />
+    <Property Name="VesselName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="MaxLoad" Type="int" Nullable="false" />
+    <Property Name="FleetID" Type="int" />
+  </EntityType>
+  <Association Name="FK_Containers_Vessels">
+    <End Role="Vessels" Type="Self.Vessels" Multiplicity="0..1" />
+    <End Role="Containers" Type="Self.Containers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vessels">
+        <PropertyRef Name="VesselID" />
+      </Principal>
+      <Dependent Role="Containers">
+        <PropertyRef Name="VesselID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Vessels_Fleets">
+    <End Role="Fleets" Type="Self.Fleets" Multiplicity="0..1" />
+    <End Role="Vessels" Type="Self.Vessels" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Fleets">
+        <PropertyRef Name="FleetID" />
+      </Principal>
+      <Dependent Role="Vessels">
+        <PropertyRef Name="FleetID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="FleetManagementModelStoreContainer">
+    <EntitySet Name="Containers" EntityType="Self.Containers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Fleets" EntityType="Self.Fleets" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Vessels" EntityType="Self.Vessels" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Containers_Vessels" Association="Self.FK_Containers_Vessels">
+      <End Role="Vessels" EntitySet="Vessels" />
+      <End Role="Containers" EntitySet="Containers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Vessels_Fleets" Association="Self.FK_Vessels_Fleets">
+      <End Role="Fleets" EntitySet="Fleets" />
+      <End Role="Vessels" EntitySet="Vessels" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

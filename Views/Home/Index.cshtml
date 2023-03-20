@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Fleet Management";
+}
+
+<main>
+    <section class="row" aria-labelledby="aspnetTitle">
+        <h1 id="title">Fleet Management Platform</h1>
+
+        <hr /><br /><br /><br /><br /><br />
+    </section>
+
+    <div class="row">
+        <section class="col-md-4" aria-labelledby="Fleets">
+            <h2>@Html.ActionLink("Fleets", "Index", "Fleet")</h2>
+        </section>
+        <section class="col-md-4" aria-labelledby="Vessels">
+            <h2>@Html.ActionLink("Vessels", "Index", "Vessel")</h2>
+        </section>
+        <section class="col-md-4" aria-labelledby="Containers">
+            <h2>@Html.ActionLink("Containers", "Index", "Container")</h2>
+        </section>
+
+    </div>
+
+        <br /><br />
+        <img src="~/Content/ship.jpg" style="display: block; margin-left: auto; margin-right: auto; width: 50%;" />
+ 
+
+</main>
